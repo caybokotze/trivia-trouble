@@ -1,0 +1,48 @@
+﻿@page "/"
+@using TriviaTrouble.UI.Models
+
+<div class="pagetitle">
+    <h1>Trivia Trouble</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">A little trivia game</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+<div class="row">
+    
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Question</h5>
+
+            <!-- List group With Checkboxes and radios -->
+            <ul class="list-group">
+                
+                @foreach (var item in Answers)
+                {
+                    <li class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                        First checkbox
+                    </li>
+                }
+
+            </ul><!-- End List Checkboxes and radios -->
+
+        </div>
+    </div>
+
+</div>
+
+</div>
+</section>
+
+
+@code {
+
+    public string? Question { get; set; } = "John";
+    public List<Answer> Answers { get; set; }
+
+}

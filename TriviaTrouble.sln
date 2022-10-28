@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriviaTrouble.API", "TriviaTrouble.API\TriviaTrouble.API.csproj", "{22DE15ED-2B36-41F6-97E3-8FE0E301AE6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriviaTrouble.UI", "TriviaTrouble.UI\TriviaTrouble.UI.csproj", "{0DDBDCF0-AC2F-47ED-91DC-A9859489C86F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22DE15ED-2B36-41F6-97E3-8FE0E301AE6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DE15ED-2B36-41F6-97E3-8FE0E301AE6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DE15ED-2B36-41F6-97E3-8FE0E301AE6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DE15ED-2B36-41F6-97E3-8FE0E301AE6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DDBDCF0-AC2F-47ED-91DC-A9859489C86F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DDBDCF0-AC2F-47ED-91DC-A9859489C86F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DDBDCF0-AC2F-47ED-91DC-A9859489C86F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DDBDCF0-AC2F-47ED-91DC-A9859489C86F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
