@@ -1,5 +1,9 @@
 ﻿@page "/"
 @using TriviaTrouble.UI.Models
+@using System.Net
+@using System.Text
+@using System.Text.Json
+@using System.Xml.XPath
 
 <div class="pagetitle">
     <h1>Trivia Trouble</h1>
@@ -16,7 +20,7 @@
 <div class="col-lg-6">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">@Question</h5>
+            <h5 class="card-title">@Question?.Text</h5>
 
             <!-- List group With Checkboxes and radios -->
             <ul class="list-group">
@@ -24,14 +28,26 @@
                 @foreach (var item in Answers)
                 {
                     <li class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                        First checkbox
+                        <input class="form-check-input me-1" @bind="@item.IsSelected" @onclick="() => CheckBoxItem(item)" type="checkbox" value="" aria-label="...">
+                        @item.Text
                     </li>
                 }
 
             </ul><!-- End List Checkboxes and radios -->
-
         </div>
+        <div>
+            <button class="btn btn-primary" @onclick="SubmitAnswer">Am I right?</button>
+        </div>
+        
+        @if (AnswerWasCorrect && HasSubmitted)
+        {
+            <p>You were right!</p>
+        }
+        
+        @if (!AnswerWasCorrect && HasSubmitted)
+        {
+            <p>You were wrong!</p>
+        }
     </div>
 
 </div>
@@ -42,7 +58,66 @@
 
 @code {
 
-    public string? Question { get; set; } = "John";
-    public List<Answer> Answers { get; set; }
+    protected async override void OnInitialized()
+    {
+        var httpClient = new HttpClient();
+        var httpResult = await httpClient.GetAsync("https://localhost:7116/api/trivia/question/1");
+
+        if (httpResult.StatusCode != HttpStatusCode.OK)
+        {
+            return;
+        }
+
+        var result = await httpResult.Content.ReadAsStreamAsync();
+        var ms = new MemoryStream();
+        await result.CopyToAsync(ms);
+        var bytes = ms.ToArray();
+        var resultAsString = Encoding.UTF8.GetString(bytes);
+        var question = JsonSerializer.Deserialize<Question>(resultAsString,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        
+        Question = question;
+        Answers = question?.Answers;
+        
+        StateHasChanged();
+    }
+
+    public Question? Question { get; set; }
+
+    public List<Answer>? Answers { get; set; }
+
+    public bool AnswerWasCorrect { get; set; }
+
+    public bool HasSubmitted { get; set; }
+
+    public void SubmitAnswer()
+    {
+        var selectedAnswer = Answers?.First(w => w.IsSelected);
+        if (selectedAnswer?.Id == Question?.CorrectAnswer?.Id)
+        {
+            HasSubmitted = true;
+            AnswerWasCorrect = true;
+            return;
+        }
+        HasSubmitted = true;
+        AnswerWasCorrect = false;
+        StateHasChanged();
+    }
+
+    public void CheckBoxItem(Answer answer)
+    {
+        foreach (var ans in Answers)
+        {
+            ans.IsSelected = false;
+
+            if (ans.Id == answer.Id)
+            {
+                ans.IsSelected = true;
+            }
+        }
+    }
 
 }

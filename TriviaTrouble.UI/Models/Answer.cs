@@ -14,4 +14,6 @@ public class Answer
     public virtual Question? Question { get; set; }
     public int QuestionId { get; set; }
     public string? Text { get; set; }
+    
+    public bool IsSelected { get; set; }
 }

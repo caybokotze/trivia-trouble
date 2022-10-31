@@ -10,10 +10,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(o => o.UseSqlite("Data Source=database.db"));
+builder.Services.AddCors(c =>
+    c.AddPolicy("AllowAll", o =>
+    {
+        o.AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin();
+    }));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseCors("AllowAll");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
